@@ -1,0 +1,63 @@
+; MyDriver1.inf (Minifilter / Primitive)
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = "ActivityMonitor"
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}
+Provider    = %ProviderName%
+DriverVer   = 01/09/2026,1.0.0.0
+CatalogFile = MyDriver1.cat
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 12  ; %SystemRoot%\System32\drivers
+
+[SourceDisksNames]
+1 = %DiskName%,,,\
+
+[SourceDisksFiles]
+MyDriver1.sys = 1
+
+; -------------------------
+; Install (Primitive style)
+; -------------------------
+[DefaultInstall.NTamd64]
+CopyFiles = DriverFiles
+
+[DriverFiles]
+MyDriver1.sys
+
+[DefaultInstall.NTamd64.Services]
+; 0x00000002 = associate service with installed component
+AddService = MyDriver1,0x00000002,MyDriver1.Service
+
+[MyDriver1.Service]
+DisplayName    = %ServiceDesc%
+ServiceType    = 2
+StartType      = 3
+ErrorControl   = 1
+ServiceBinary  = %12%\MyDriver1.sys
+LoadOrderGroup = "FSFilter Activity Monitor"
+Dependencies   = FltMgr
+AddReg         = MyDriver1.AddReg
+
+[MyDriver1.AddReg]
+; ƒл€ minifilter значени€ экземпл€ров должны быть под Parameters\Instances
+HKR,"Parameters\Instances","DefaultInstance",0x00000000,%InstanceName%
+HKR,"Parameters\Instances\%InstanceName%","Altitude",0x00000000,"370100"
+HKR,"Parameters\Instances\%InstanceName%","Flags",0x00010001,0x0
+
+; -------------------------
+; Uninstall (удобно дл€ тестов)
+; -------------------------
+[DefaultUninstall.NTamd64]
+DelFiles = DriverFiles
+
+[DefaultUninstall.NTamd64.Services]
+DelService = MyDriver1,0x200  ; stop + delete service
+
+[Strings]
+ProviderName  = "MyCompany"
+ServiceDesc   = "MyDriver1 Minifilter"
+DiskName      = "MyDriver1 Install Disk"
+InstanceName  = "MyDriver1 Instance"
