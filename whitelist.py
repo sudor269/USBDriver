@@ -31,7 +31,6 @@ def reg_path(service: str) -> str:
     return rf"SYSTEM\CurrentControlSet\Services\{service}\Parameters"
 
 def open_or_create_params_key(service: str, access: int):
-    # Always create Parameters if missing
     path = reg_path(service)
     return winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, path, 0, access)
 
@@ -46,7 +45,6 @@ def read_multisz(service: str) -> List[str]:
         return [x.strip().upper() for x in val if x and x.strip()]
 
 def write_multisz(service: str, items: List[str]) -> None:
-    # Normalize: uppercase, unique, sorted
     items = sorted(set([x.strip().upper() for x in items if x and x.strip()]))
     with open_or_create_params_key(service, winreg.KEY_SET_VALUE) as k:
         winreg.SetValueEx(k, VALUE_NAME, 0, winreg.REG_MULTI_SZ, items)
