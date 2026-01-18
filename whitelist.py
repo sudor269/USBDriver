@@ -83,7 +83,6 @@ def main():
         print("  python whitelist.py list [ServiceName]")
         print("  python whitelist.py add <serial_or_pnp_tail> [ServiceName]")
         print("  python whitelist.py remove <16HEXHASH> [ServiceName]")
-        print("  python whitelist.py hash <serial_or_pnp_tail>")
         sys.exit(1)
 
     cmd = sys.argv[1].lower()
@@ -107,12 +106,6 @@ def main():
         h = sys.argv[2]
         service = sys.argv[3] if len(sys.argv) >= 4 else SERVICE
         cmd_remove(service, h)
-
-    elif cmd == "hash":
-        if len(sys.argv) < 3:
-            print("hash requires serial string")
-            sys.exit(1)
-        cmd_hash(sys.argv[2])
 
     else:
         print("Unknown command:", cmd)

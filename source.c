@@ -2,7 +2,7 @@
 #include <ntddstor.h>
 #include <ntstrsafe.h>
 
-#define TAG 'BSBU'  // "UBSB"
+#define TAG 'BSBU'  
 
 PFLT_FILTER gFilter = NULL;
 

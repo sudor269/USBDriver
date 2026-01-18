@@ -42,13 +42,13 @@ Dependencies   = FltMgr
 AddReg         = MyDriver1.AddReg
 
 [MyDriver1.AddReg]
-; Для minifilter значения экземпляров должны быть под Parameters\Instances
+; пїЅпїЅпїЅ minifilter пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Parameters\Instances
 HKR,"Parameters\Instances","DefaultInstance",0x00000000,%InstanceName%
 HKR,"Parameters\Instances\%InstanceName%","Altitude",0x00000000,"370100"
 HKR,"Parameters\Instances\%InstanceName%","Flags",0x00010001,0x0
 
 ; -------------------------
-; Uninstall (удобно для тестов)
+; Uninstall (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 ; -------------------------
 [DefaultUninstall.NTamd64]
 DelFiles = DriverFiles
@@ -57,7 +57,7 @@ DelFiles = DriverFiles
 DelService = MyDriver1,0x200  ; stop + delete service
 
 [Strings]
-ProviderName  = "MyCompany"
+ProviderName  = "Test"
 ServiceDesc   = "MyDriver1 Minifilter"
 DiskName      = "MyDriver1 Install Disk"
 InstanceName  = "MyDriver1 Instance"
